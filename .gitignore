@@ -1,0 +1,9 @@
+# Directories
+.vs/
+out/
+.idea/
+[Bb]uild/
+
+# Files
+*.user
+CMakeSettings.json
