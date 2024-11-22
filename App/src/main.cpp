@@ -1,11 +1,18 @@
-#include "engine.hpp"
+#include <roo.hpp>
+
 #include <iostream>
 
-int main()
+class MyApp : public roo::Application
 {
-    std::cout << "Hello from App!" << std::endl;
+public:
+				MyApp()
+				{
+								std::cout << "wassup" << std::endl;
+								
+				}
+};
 
-    HelloWorld();
-
-    std::cin.get();
+roo::Application* roo::CreateApplication()
+{
+				return new MyApp();
 }
