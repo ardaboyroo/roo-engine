@@ -2,7 +2,7 @@
 
 
 # Create the library target
-add_library(roo-engine)
+add_library(roo-engine SHARED)
 
 
 # Include directories for the engine's headers
@@ -35,6 +35,42 @@ set_target_properties(roo-engine PROPERTIES
 )
 
 
+# Include the FetchContent functions
+include(FetchContent)
+
+
+# Fetch third party libraries
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG        v1.15.0
+)
+
+
+# Fetch and build the libraries
+FetchContent_MakeAvailable(spdlog)
+
+
+# Statically link spdlog into roo-engine without exposing it to other targets
+target_link_libraries(roo-engine PRIVATE spdlog::spdlog)
+
+
+# Assign spdlog to the vendor filter
+assign_to_vendor_folder(spdlog)
+
+
 # Call the create_source_groups function to mirror the 
 # source folder structure as source_groups (filters) in Visual Studio
 create_source_groups(${CMAKE_CURRENT_SOURCE_DIR}/src "src" ${ROO_ENGINE_SOURCES})
+
+
+# Use precompiled headers for roo-engine
+target_precompile_headers(roo-engine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/pch.hpp)
+
+
+# Copy the roo-engine DLL to the App binary directory
+add_custom_command(TARGET roo-engine POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:roo-engine>       # The DLL built by roo-engine
+        ${CMAKE_BINARY_DIR}/bin/App/$<CONFIG>/$<TARGET_FILE_NAME:roo-engine>    # Destination directory
+)

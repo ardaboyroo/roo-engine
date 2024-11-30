@@ -35,14 +35,6 @@ set_target_properties(App PROPERTIES
 )
 
 
-# Copy the roo-engine DLL to the App binary directory
-add_custom_command(TARGET App POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:roo-engine>       # The DLL built by roo-engine
-        $<TARGET_FILE_DIR:App>          # Destination directory
-)
-
-
 # Call the create_source_groups function to mirror the 
 # source folder structure as source_groups (filters) in Visual Studio
 create_source_groups(${CMAKE_CURRENT_SOURCE_DIR}/src "src" ${APP_SOURCES})

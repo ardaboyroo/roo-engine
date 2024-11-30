@@ -1,7 +1,7 @@
 # /root/
 
 # Set the minimum required cmake version
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.29)
 
 
 project(roo-engine)
@@ -10,10 +10,6 @@ project(roo-engine)
 # Define the C++ version
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-
-# Set the default library compilation to shared (dll/so)
-set(BUILD_SHARED_LIBS ON)
 
 
 # Set the configuration types to Debug and Release only
@@ -35,22 +31,8 @@ if(MSVC)
 endif()
 
 
-# Function to create source groups (filters) dynamically for Visual Studio
-function(create_source_groups base_path root_filter)
-    file(TO_CMAKE_PATH ${base_path} normalized_base_path)
-    foreach(source_file ${ARGN})
-        file(RELATIVE_PATH relative_path "${base_path}" "${source_file}")
-        get_filename_component(source_dir "${relative_path}" DIRECTORY)
-        string(REPLACE "/" "\\" source_group_name "${source_dir}")
-        if (source_group_name)
-            # Add the root filter prefix
-            source_group("${root_filter}\\${source_group_name}" FILES "${source_file}")
-        else()
-            # Files at the base path go directly under the root filter
-            source_group("${root_filter}" FILES "${source_file}")
-        endif()
-    endforeach()
-endfunction()
+# Include personal utility functions
+include(scripts/cmake/utils.cmake)
 
 
 # Add the subdirectories to the project

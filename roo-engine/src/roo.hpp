@@ -19,8 +19,15 @@
 //
 ///////////////////////////////////
 
-
+// Core headers
+#include "Core/Core.hpp"
 #include "Core/Application.hpp"
+#include "Core/Log.hpp"
+
+// Event headers
+#include "Events/ApplicationEvent.hpp"
+#include "Events/KeyEvent.hpp"
+#include "Events/MouseEvent.hpp"
 
 // ------------Entry Point------------
 #include "Core/EntryPoint.hpp"

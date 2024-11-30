@@ -1,18 +1,15 @@
-#include <roo.hpp>
-
-#include <iostream>
+#include "roo.hpp"
 
 class MyApp : public roo::Application
 {
 public:
-				MyApp()
-				{
-								std::cout << "wassup" << std::endl;
-								
-				}
+    MyApp()
+    {
+        
+    }
 };
 
 roo::Application* roo::CreateApplication()
 {
-				return new MyApp();
+    return new MyApp();
 }
