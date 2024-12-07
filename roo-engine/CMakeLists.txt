@@ -46,17 +46,32 @@ FetchContent_Declare(
     GIT_TAG        v1.15.0
 )
 
+# Fetch GLFW
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG        3.3.8
+)
+
+# Disable unnecessary features for GLFW
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 # Fetch and build the libraries
 FetchContent_MakeAvailable(spdlog)
+FetchContent_MakeAvailable(glfw)
 
 
 # Statically link spdlog into roo-engine without exposing it to other targets
 target_link_libraries(roo-engine PRIVATE spdlog::spdlog)
-
+target_link_libraries(roo-engine PRIVATE glfw)
 
 # Assign spdlog to the vendor filter
 assign_to_vendor_folder(spdlog)
+assign_to_vendor_folder(glfw)
+assign_to_vendor_folder(update_mappings)
 
 
 # Call the create_source_groups function to mirror the 

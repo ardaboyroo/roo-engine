@@ -25,12 +25,12 @@ namespace roo
     // Event category flags.
     enum EventCategory
     {
-        None = 0,																																			// 00000
-        EventCategoryApplication = BITL(0),						// 00001
-        EventCategoryInput = BITL(1),						// 00010
-        EventCategoryKeyboard = BITL(2),						// 00100
-        EventCategoryMouse = BITL(3),						// 01000
-        EventCategoryMouseButton = BITL(4)							// 10000
+        None = 0,                                   // 00000
+        EventCategoryApplication    = BITL(0),      // 00001
+        EventCategoryInput          = BITL(1),      // 00010
+        EventCategoryKeyboard       = BITL(2),      // 00100
+        EventCategoryMouse          = BITL(3),      // 01000
+        EventCategoryMouseButton    = BITL(4)       // 10000
     };
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
@@ -55,7 +55,6 @@ namespace roo
         bool IsInCategory(EventCategory category);
     };
 
-    //
     class EventDispatcher
     {
     public:
@@ -63,7 +62,15 @@ namespace roo
 
         // F will be deduced by the compiler
         template<typename T, typename F>
-        bool Dispatch(const F& func);
+        bool Dispatch(const F& func)
+        {
+            if (m_Event.GetEventType() == T::GetStaticType())
+            {
+                m_Event.Handled |= func(static_cast<T&>(m_Event));
+                return true;
+            }
+            return false;
+        }
 
     private:
         Event& m_Event;

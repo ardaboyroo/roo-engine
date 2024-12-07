@@ -13,6 +13,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
+// roo-engine
+#include "Core/Log.hpp"
+
 // spdlog
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+
+// GLFW
+#include "GLFW/glfw3.h"

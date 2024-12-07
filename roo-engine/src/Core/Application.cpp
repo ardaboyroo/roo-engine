@@ -1,28 +1,45 @@
 #include "Application.hpp"
 #include "Log.hpp"
 #include "Events/ApplicationEvent.hpp"
+#include "Window.hpp"
 
-roo::Application::Application()
+namespace roo
 {
-}
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
-roo::Application::~Application()
-{
-}
-
-void roo::Application::Run()
-{
-    WindowResizeEvent e(1280, 720);
-    if (e.IsInCategory(EventCategoryApplication))
+    Application::Application()
     {
-        ROO_LOG_INFO("Application event fired");
-    }
-    if (e.IsInCategory(EventCategoryInput))
-    {
-        ROO_LOG_ERROR("Input event fired");
+        m_Window = std::make_unique<Window>(BIND_EVENT_FN(Application::OnEvent));
+        m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
     }
 
-    while (true)
+    Application::~Application()
     {
+    }
+
+    void Application::Run()
+    {
+        while (m_Running)
+        {
+            m_Window->OnUpdate();
+        }
+    }
+
+    void Application::SetBackgroundColor(float red, float green, float blue)
+    {
+        m_Window->SetBackgroundColor(red, green, blue);
+    }
+
+    void Application::OnEvent(Event& e)
+    {
+        ROO_LOG_INFO("Application::OnEvent called!");
+        EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent& e)
+    {
+        m_Running = false;
+        return true;
     }
 }
