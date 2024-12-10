@@ -101,10 +101,12 @@ namespace roo
 
 
         glfwSetErrorCallback(rooGLFWErrorCallback);
-
         // Create a GLFW Window
         m_GLFWWindow = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), NULL, NULL);
         glfwMakeContextCurrent(m_GLFWWindow);
+        int GLADstatus = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        if (!GLADstatus)
+            ROO_LOG_ERROR("Could not initialize GLAD");
         glfwSetWindowUserPointer(m_GLFWWindow, &m_Data);
         SetVSync(m_Data.VSyncEnabled);
 

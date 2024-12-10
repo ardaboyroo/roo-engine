@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Events/Event.hpp"
-
 #include <sstream>
 
 namespace roo

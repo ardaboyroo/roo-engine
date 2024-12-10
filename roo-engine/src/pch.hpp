@@ -20,5 +20,8 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+// GLAD
+#include "glad/glad.h"
+
 // GLFW
 #include "GLFW/glfw3.h"

@@ -1,11 +1,10 @@
 #pragma once
 
-// Internal
+#include "Events/Event.hpp"
 
 #include <string>
-#include "GLFW/glfw3.h"
 
-#include "Events/Event.hpp"
+struct GLFWwindow;
 
 namespace roo
 {

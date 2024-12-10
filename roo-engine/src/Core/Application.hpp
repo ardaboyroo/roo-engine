@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Declarations.hpp"
+#include "Core/LayerStack.hpp"
+#include "Events/ApplicationEvent.hpp"
+#include "Core/Window.hpp"
+
 #include <memory>
 
 namespace roo
@@ -15,6 +18,9 @@ namespace roo
 
         void OnEvent(Event& e);
 
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* layer);
+
     protected:
         void SetBackgroundColor(float red, float green, float blue);
 
@@ -22,6 +28,7 @@ namespace roo
         bool OnWindowClose(WindowCloseEvent& e);
 
         std::unique_ptr<Window> m_Window;
+        LayerStack m_LayerStack;
         bool m_Running = true;
     };
 

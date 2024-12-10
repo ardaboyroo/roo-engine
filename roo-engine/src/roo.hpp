@@ -23,6 +23,7 @@
 #include "Core/Core.hpp"
 #include "Core/Application.hpp"
 #include "Core/Log.hpp"
+#include "Core/Layer.hpp"
 
 // Event headers
 #include "Events/ApplicationEvent.hpp"
