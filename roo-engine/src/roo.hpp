@@ -25,6 +25,9 @@
 #include "Core/Log.hpp"
 #include "Core/Layer.hpp"
 
+// ImGui headers
+#include "ImGui/ImGuiLayer.hpp"
+
 // Event headers
 #include "Events/ApplicationEvent.hpp"
 #include "Events/KeyEvent.hpp"

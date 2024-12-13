@@ -21,6 +21,7 @@ public:
     MyApp()
     {
         PushLayer(new TestLayer());
+        PushOverlay(new roo::ImGuiLayer());
         SetBackgroundColor(1.0f, 1.0f, 0.0f);
     }
 };

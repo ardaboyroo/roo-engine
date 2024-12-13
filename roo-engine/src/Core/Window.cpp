@@ -27,7 +27,6 @@ namespace roo
 
     void Window::OnUpdate()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(m_GLFWWindow);
         glfwPollEvents();
     }

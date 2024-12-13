@@ -9,8 +9,15 @@ namespace roo
 {
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
+    Application* Application::s_Instance = nullptr;
+
     Application::Application()
     {
+        if (!s_Instance)
+            s_Instance = this;
+        else
+            ROO_LOG_ERROR("Application already exists!");
+
         m_Window = std::make_unique<Window>(BIND_EVENT_FN(Application::OnEvent));
         m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
     }
@@ -23,6 +30,8 @@ namespace roo
     {
         while (m_Running)
         {
+            glClear(GL_COLOR_BUFFER_BIT);
+
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();
 
@@ -37,7 +46,6 @@ namespace roo
 
     void Application::OnEvent(Event& e)
     {
-        ROO_LOG_INFO("Application::OnEvent called!");
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
@@ -52,11 +60,23 @@ namespace roo
     void Application::PushLayer(Layer* layer)
     {
         m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* layer)
     {
         m_LayerStack.PushOverlay(layer);
+        layer->OnAttach();
+    }
+
+    Window& Application::GetWindow()
+    {
+        return *m_Window;
+    }
+
+    Application& Application::Get()
+    {
+        return *s_Instance;
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& e)

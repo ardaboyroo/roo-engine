@@ -17,11 +17,11 @@
 #include "Core/Log.hpp"
 
 // spdlog
-#include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 // GLAD
-#include "glad/glad.h"
+#include <glad/glad.h>
 
 // GLFW
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>

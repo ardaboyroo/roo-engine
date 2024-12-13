@@ -21,6 +21,10 @@ namespace roo
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
 
+        Window& GetWindow();
+
+        static Application& Get();
+
     protected:
         void SetBackgroundColor(float red, float green, float blue);
 
@@ -30,6 +34,8 @@ namespace roo
         std::unique_ptr<Window> m_Window;
         LayerStack m_LayerStack;
         bool m_Running = true;
+
+        static Application* s_Instance;
     };
 
     // Should be defined by client application

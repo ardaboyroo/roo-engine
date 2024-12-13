@@ -29,6 +29,7 @@ namespace roo
         {
         }
     };
+
     class Application;
     class Window
     {
@@ -64,6 +65,8 @@ namespace roo
         };
 
         GLFWwindow* m_GLFWWindow;
+
+        friend class ImGuiLayer;
 
         WindowData m_Data;
     };
