@@ -35,6 +35,6 @@ namespace roo
 // Client log macros
 //
 #define LOG_INFO(x)         roo::Log::App_log_info(x)
-#define LOG_WARN(x)         roo::Log::App_log_info(x)
-#define LOG_ERROR(x)        roo::Log::App_log_info(x)
-#define LOG_FATAL(x)        roo::Log::App_log_info(x)
+#define LOG_WARN(x)         roo::Log::App_log_warn(x)
+#define LOG_ERROR(x)        roo::Log::App_log_error(x)
+#define LOG_FATAL(x)        roo::Log::App_log_fatal(x)

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Core/LayerStack.hpp"
-#include "Events/ApplicationEvent.hpp"
 #include "Core/Window.hpp"
+#include "Events/ApplicationEvent.hpp"
+#include "ImGui/ImGuiLayer.hpp"
 
 #include <memory>
 
@@ -23,6 +24,8 @@ namespace roo
 
         Window& GetWindow();
 
+        ImGuiContext* GetImGuiContext() { return m_ImGuiLayer->GetImGuiContext(); }
+
         static Application& Get();
 
     protected:
@@ -32,9 +35,10 @@ namespace roo
         bool OnWindowClose(WindowCloseEvent& e);
 
         std::unique_ptr<Window> m_Window;
+
         LayerStack m_LayerStack;
         bool m_Running = true;
-
+        ImGuiLayer* m_ImGuiLayer;
         static Application* s_Instance;
     };
 

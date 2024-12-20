@@ -24,6 +24,9 @@
 #include "Core/Application.hpp"
 #include "Core/Log.hpp"
 #include "Core/Layer.hpp"
+#include "Core/Input.hpp"
+#include "Core/KeyCodes.hpp"
+#include "Core/MouseCodes.hpp"
 
 // ImGui headers
 #include "ImGui/ImGuiLayer.hpp"
@@ -32,6 +35,10 @@
 #include "Events/ApplicationEvent.hpp"
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
+
+// Third Party headers
+#include "glm/glm.hpp"
+#include "imgui.h"
 
 // ------------Entry Point------------
 #include "Core/EntryPoint.hpp"

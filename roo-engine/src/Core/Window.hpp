@@ -64,9 +64,11 @@ namespace roo
             EventCallbackFn EventCallback;
         };
 
+    private:
         GLFWwindow* m_GLFWWindow;
 
         friend class ImGuiLayer;
+        friend class Input;
 
         WindowData m_Data;
     };

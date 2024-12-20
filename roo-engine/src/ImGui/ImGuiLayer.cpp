@@ -2,15 +2,10 @@
 
 #include "Core/Application.hpp"
 
-#include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_glfw.h>
-#include <GLFW/glfw3.h>
-
 namespace roo
 {
     ImGuiLayer::ImGuiLayer()
-        : Layer("ImGuiLayer")
+        : Layer("ImGuiLayer"), m_ImGuiContext(nullptr)
     {
     }
     ImGuiLayer::~ImGuiLayer()
@@ -19,7 +14,7 @@ namespace roo
 
     void ImGuiLayer::OnAttach()
     {
-        ImGui::CreateContext();
+        m_ImGuiContext = ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
         ImGuiIO& io = ImGui::GetIO();
@@ -28,7 +23,6 @@ namespace roo
 
         ImGui_ImplGlfw_InitForOpenGL(Application::Get().GetWindow().m_GLFWWindow, true);
         ImGui_ImplOpenGL3_Init("#version 410");
-
     }
 
     void ImGuiLayer::OnDetach()
@@ -38,12 +32,21 @@ namespace roo
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate()
+    void ImGuiLayer::Begin()
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+    }
 
+    void ImGuiLayer::End()
+    {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+
+    void ImGuiLayer::OnImGuiRender()
+    {
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
 
@@ -51,10 +54,8 @@ namespace roo
         ImGui::Bullet();
         ImGui::Text("This is my test window");
         ImGui::End();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
+
     void ImGuiLayer::OnEvent(Event& event)
     {
     }

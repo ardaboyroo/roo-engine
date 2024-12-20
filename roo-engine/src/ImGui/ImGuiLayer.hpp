@@ -2,6 +2,7 @@
 
 #include "Core/Layer.hpp"
 
+struct ImGuiContext;
 namespace roo
 {
     class ImGuiLayer : public Layer
@@ -9,12 +10,18 @@ namespace roo
     public:
         ImGuiLayer();
         ~ImGuiLayer();
-        
-        void OnAttach();
-        void OnDetach();
-        void OnUpdate();
-        void OnEvent(Event& event);
 
+        void OnAttach() override;
+        void OnDetach() override;
+        void OnImGuiRender() override;
+        void OnEvent(Event& event) override;
+
+        void Begin();
+        void End();
+
+        ImGuiContext* GetImGuiContext() { return m_ImGuiContext; }
+
+        ImGuiContext* m_ImGuiContext;
     private:
     };
 }

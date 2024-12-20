@@ -68,6 +68,13 @@ FetchContent_Declare(
     GIT_TAG        v1.91.5
 )
 
+# Fetch glm
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG        0.9.9.8
+)
+
 
 # Disable unnecessary features for GLFW
 set(GLFW_BUILD_EXAMPLES OFF)
@@ -85,6 +92,7 @@ FetchContent_MakeAvailable(spdlog)
 FetchContent_MakeAvailable(glfw)
 FetchContent_MakeAvailable(glad)
 FetchContent_MakeAvailable(imgui)
+FetchContent_MakeAvailable(glm)
 
 
 # Since ImGui doesn't support cmake we have to do it manually.
@@ -117,7 +125,10 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(roo-engine PRIVATE spdlog)
 target_link_libraries(roo-engine PRIVATE glfw)
 target_link_libraries(roo-engine PRIVATE glad)
-target_link_libraries(roo-engine PRIVATE imgui)
+
+# Link and expose the following libraries to other targets
+target_link_libraries(roo-engine PUBLIC imgui)
+target_link_libraries(roo-engine PUBLIC glm)
 
 
 # Assign the third party libraries to the vendor filter
@@ -127,6 +138,7 @@ assign_to_vendor_folder(update_mappings)
 assign_to_vendor_folder(glad)
 assign_to_vendor_folder(glad-generate-files)
 assign_to_vendor_folder(imgui)
+assign_to_vendor_folder(glm)
 
 
 # Call the create_source_groups function to mirror the 
