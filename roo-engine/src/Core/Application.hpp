@@ -1,9 +1,14 @@
 #pragma once
 
-#include "Core/LayerStack.hpp"
 #include "Core/Window.hpp"
+#include "Core/LayerStack.hpp"
 #include "Events/ApplicationEvent.hpp"
+
 #include "ImGui/ImGuiLayer.hpp"
+
+#include "Renderer/VertexBuffer.hpp"
+#include "Renderer/IndexBuffer.hpp"
+#include "Renderer/Shader.hpp"
 
 #include <memory>
 
@@ -40,6 +45,12 @@ namespace roo
         bool m_Running = true;
         ImGuiLayer* m_ImGuiLayer;
         static Application* s_Instance;
+
+        // TEMP
+        unsigned int m_VertexArray;
+        std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<IndexBuffer> m_IndexBuffer;
     };
 
     // Should be defined by client application

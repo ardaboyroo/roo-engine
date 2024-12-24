@@ -29,9 +29,9 @@ public:
 
     void OnImGuiRender() override
     {
-        ImGui::Begin("App Test");
-        ImGui::Text("This is a test ImGui window from App");
-        ImGui::End();
+        //ImGui::Begin("App Test");
+        //ImGui::Text("This is a test ImGui window from App");
+        //ImGui::End();
     }
 };
 
@@ -41,7 +41,7 @@ public:
     MyApp()
     {
         PushLayer(new TestLayer());
-        SetBackgroundColor(1.0f, 1.0f, 0.0f);
+        SetBackgroundColor(0.2f, 0.25f, 0.3f);
     }
 };
 

@@ -47,13 +47,13 @@ namespace roo
 
     void ImGuiLayer::OnImGuiRender()
     {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+        //static bool show = true;
+        //ImGui::ShowDemoWindow(&show);
 
-        ImGui::Begin("Test");
-        ImGui::Bullet();
-        ImGui::Text("This is my test window");
-        ImGui::End();
+        //ImGui::Begin("Test");
+        //ImGui::Bullet();
+        //ImGui::Text("This is my test window");
+        //ImGui::End();
     }
 
     void ImGuiLayer::OnEvent(Event& event)
