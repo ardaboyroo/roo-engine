@@ -36,6 +36,14 @@
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
 
+// Renderer headers
+#include "Renderer/Renderer.hpp"
+#include "Renderer/VertexArray.hpp"
+#include "Renderer/VertexBuffer.hpp"
+#include "Renderer/BufferLayout.hpp"
+#include "Renderer/IndexBuffer.hpp"
+#include "Renderer/Shader.hpp"
+
 // Third Party headers
 #include "glm/glm.hpp"
 #include "imgui.h"

@@ -5,33 +5,13 @@
 #include "Window.hpp"
 #include "LayerStack.hpp"
 
+#include "Renderer/Renderer.hpp"
+
 namespace roo
 {
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
-
-    // TEMP
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-    {
-        switch (type)
-        {
-        case roo::ShaderDataType::Float:    return GL_FLOAT;
-        case roo::ShaderDataType::Float2:   return GL_FLOAT;
-        case roo::ShaderDataType::Float3:   return GL_FLOAT;
-        case roo::ShaderDataType::Float4:   return GL_FLOAT;
-        case roo::ShaderDataType::Int:      return GL_INT;
-        case roo::ShaderDataType::Int2:     return GL_INT;
-        case roo::ShaderDataType::Int3:     return GL_INT;
-        case roo::ShaderDataType::Int4:     return GL_INT;
-        case roo::ShaderDataType::Mat3:     return GL_FLOAT;
-        case roo::ShaderDataType::Mat4:     return GL_FLOAT;
-        case roo::ShaderDataType::Bool:     return GL_BOOL;
-        }
-
-        ROO_LOG_ERROR("Unknown ShaderDataType!");
-        return 0;
-    }
 
     Application::Application()
     {
@@ -47,8 +27,7 @@ namespace roo
         PushOverlay(m_ImGuiLayer);
 
         // TEMP
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
+        m_VertexArray = std::make_shared<VertexArray>();
 
         float vertices[3 * 5] = {
             -0.5, -0.5f, 0.0f, 1.0f, 1.0f,
@@ -56,33 +35,21 @@ namespace roo
             0.0f, 0.5f, 0.0f, 1.0f, 0.0f,
         };
 
-        m_VertexBuffer.reset(new VertexBuffer(vertices, sizeof(vertices)));
+        std::shared_ptr<VertexBuffer> vertexBuffer(new VertexBuffer(vertices, sizeof(vertices)));
 
-        {
-            BufferLayout layout = {
-                { ShaderDataType::Float3, "VertexPos" },
-                { ShaderDataType::Float2, "color"}
-            };
 
-            m_VertexBuffer->SetLayout(layout);
-        }
+        BufferLayout layout = {
+            { ShaderDataType::Float3, "VertexPos" },
+            { ShaderDataType::Float2, "color"}
+        };
 
-        uint32_t index = 0;
-        const auto& layout = m_VertexBuffer->GetLayout();
-        for (const auto& element : layout)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
-                element.GetComponentCount(),
-                ShaderDataTypeToOpenGLBaseType(element.Type),
-                element.Normalized ? GL_TRUE : GL_FALSE,
-                layout.GetStride(),
-                (const void*)element.Offset);
-            index++;
-        }
+        vertexBuffer->SetLayout(layout);
+        m_VertexArray->AddVertexBuffer(vertexBuffer);
+
 
         GLuint indices[3] = { 0, 1, 2 };
-        m_IndexBuffer.reset(new IndexBuffer(indices, sizeof(indices) / sizeof(uint32_t)));
+        std::shared_ptr<IndexBuffer> indexBuffer(new IndexBuffer(indices, sizeof(indices) / sizeof(uint32_t)));
+        m_VertexArray->SetIndexBuffer(indexBuffer);
 
         std::string vertexSrc = R"(
 #version 330 core
@@ -113,6 +80,63 @@ void main()
         )";
 
         m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+
+        ///////////////////////////////
+        //BACKGROUND                ///
+        ///////////////////////////////
+
+        m_BackgroundVertexArray = std::make_shared<VertexArray>();
+
+        float backgroundVertices[] = {
+            -0.75, -0.75f, 0.0f,
+            0.75f, -0.75f, 0.0f,
+            0.75f, 0.75f, 0.0f,
+            -0.75f, 0.75f, 0.0f,
+        };
+
+        std::shared_ptr<VertexBuffer> backgroundVertexBuffer(new VertexBuffer(backgroundVertices, sizeof(backgroundVertices)));
+
+
+        BufferLayout backgroundLayout = {
+            { ShaderDataType::Float3, "VertexPos" }
+        };
+
+        backgroundVertexBuffer->SetLayout(backgroundLayout);
+        m_BackgroundVertexArray->AddVertexBuffer(backgroundVertexBuffer);
+
+
+        GLuint backgroundIndices[] = { 0, 1, 2 , 0, 2, 3 };
+        std::shared_ptr<IndexBuffer> backgroundIndexBuffer(new IndexBuffer(backgroundIndices, sizeof(backgroundIndices) / sizeof(uint32_t)));
+        m_BackgroundVertexArray->SetIndexBuffer(backgroundIndexBuffer);
+
+        std::string backgroundVertexSrc = R"(
+#version 330 core
+
+layout(location = 0) in vec3 VertexPos;
+
+out vec3 vPos;
+
+void main()
+{
+    vPos = VertexPos;
+    gl_Position = vec4(VertexPos, 1.0f);
+}
+        )";
+
+        std::string backgroundFragmentSrc = R"(
+#version 330 core
+
+layout(location = 0) out vec4 color;
+
+in vec3 vPos;
+
+void main()
+{
+    color = vec4(vPos, 1.0f);
+}
+        )";
+
+        m_BackgroundShader.reset(new Shader(backgroundVertexSrc, backgroundFragmentSrc));
     }
 
     Application::~Application()
@@ -123,11 +147,13 @@ void main()
     {
         while (m_Running)
         {
-            glClear(GL_COLOR_BUFFER_BIT);
+            Renderer::Clear();
+
+            m_BackgroundShader->Bind();
+            Renderer::Draw(m_BackgroundVertexArray);
 
             m_Shader->Bind();
-            glBindVertexArray(m_VertexArray);
-            glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::Draw(m_VertexArray);
 
             // Update all layers
             for (Layer* layer : m_LayerStack)

@@ -9,6 +9,7 @@
 #include "Renderer/VertexBuffer.hpp"
 #include "Renderer/IndexBuffer.hpp"
 #include "Renderer/Shader.hpp"
+#include "Renderer/VertexArray.hpp"
 
 #include <memory>
 
@@ -47,10 +48,11 @@ namespace roo
         static Application* s_Instance;
 
         // TEMP
-        unsigned int m_VertexArray;
-        std::unique_ptr<Shader> m_Shader;
-        std::unique_ptr<VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        std::shared_ptr<Shader> m_Shader;
+        std::shared_ptr<VertexArray> m_VertexArray;
+
+        std::shared_ptr<Shader> m_BackgroundShader;
+        std::shared_ptr<VertexArray> m_BackgroundVertexArray;
     };
 
     // Should be defined by client application

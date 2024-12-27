@@ -7,7 +7,7 @@ namespace roo
     class VertexBuffer
     {
     public:
-        VertexBuffer(float* vertices, uint32_t size);
+        VertexBuffer(void* vertices, uint32_t size);
         ~VertexBuffer();
 
         void Bind();
