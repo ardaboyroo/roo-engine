@@ -15,7 +15,7 @@ namespace roo
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
-        virtual void OnUpdate() {}
+        virtual void OnUpdate(float deltaTime) {}
         virtual void OnImGuiRender() {}
         virtual void OnEvent(roo::Event& event) {}
 

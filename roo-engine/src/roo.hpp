@@ -27,11 +27,13 @@
 #include "Core/Input.hpp"
 #include "Core/KeyCodes.hpp"
 #include "Core/MouseCodes.hpp"
+#include "Core/Texture.hpp"
 
 // ImGui headers
 #include "ImGui/ImGuiLayer.hpp"
 
 // Event headers
+#include "Events/Event.hpp"
 #include "Events/ApplicationEvent.hpp"
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
@@ -43,6 +45,10 @@
 #include "Renderer/BufferLayout.hpp"
 #include "Renderer/IndexBuffer.hpp"
 #include "Renderer/Shader.hpp"
+#include "Renderer/Camera.hpp"
+
+// Util headers
+#include "Utils/Utils.hpp"
 
 // Third Party headers
 #include "glm/glm.hpp"

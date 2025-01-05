@@ -10,6 +10,7 @@
 #include "Renderer/IndexBuffer.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/VertexArray.hpp"
+#include "Renderer/Camera.hpp"
 
 #include <memory>
 
@@ -20,6 +21,7 @@ namespace roo
     public:
         Application();
         virtual ~Application();
+        static Application& Get();
 
         void Run();
 
@@ -28,14 +30,19 @@ namespace roo
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
 
+    public:
         Window& GetWindow();
 
         ImGuiContext* GetImGuiContext() { return m_ImGuiLayer->GetImGuiContext(); }
 
-        static Application& Get();
+        Camera& GetCamera();
 
-    protected:
+        bool GetVSync();
+
+    public:
         void SetBackgroundColor(float red, float green, float blue);
+
+        void SetVSync(bool enabled);
 
     private:
         bool OnWindowClose(WindowCloseEvent& e);
@@ -47,12 +54,10 @@ namespace roo
         ImGuiLayer* m_ImGuiLayer;
         static Application* s_Instance;
 
-        // TEMP
-        std::shared_ptr<Shader> m_Shader;
-        std::shared_ptr<VertexArray> m_VertexArray;
+        Camera m_Camera;
 
-        std::shared_ptr<Shader> m_BackgroundShader;
-        std::shared_ptr<VertexArray> m_BackgroundVertexArray;
+        double m_LastFrameTime;
+        float m_DeltaTime;
     };
 
     // Should be defined by client application

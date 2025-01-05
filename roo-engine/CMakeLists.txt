@@ -75,6 +75,13 @@ FetchContent_Declare(
     GIT_TAG        0.9.9.8
 )
 
+# Fetch stb
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+    GIT_TAG        5c205738c191bcb0abc65c4febfa9bd25ff35234
+)
+
 
 # Disable unnecessary features for GLFW
 set(GLFW_BUILD_EXAMPLES OFF)
@@ -93,6 +100,7 @@ FetchContent_MakeAvailable(glfw)
 FetchContent_MakeAvailable(glad)
 FetchContent_MakeAvailable(imgui)
 FetchContent_MakeAvailable(glm)
+FetchContent_MakeAvailable(stb)
 
 
 # Since ImGui doesn't support cmake we have to do it manually.
@@ -121,10 +129,19 @@ target_include_directories(imgui PUBLIC
 )
 
 
+# Since stb is a header only library without cmake we have to create an INTERFACE target
+add_library(stb INTERFACE)
+
+# Include every (header) file into the target
+target_include_directories(stb INTERFACE ${stb_SOURCE_DIR})
+
+
 # Statically link the libraries into roo-engine without exposing it to other targets
 target_link_libraries(roo-engine PRIVATE spdlog)
 target_link_libraries(roo-engine PRIVATE glfw)
 target_link_libraries(roo-engine PRIVATE glad)
+target_link_libraries(roo-engine PRIVATE stb)
+
 
 # Link and expose the following libraries to other targets
 target_link_libraries(roo-engine PUBLIC imgui)
@@ -139,6 +156,7 @@ assign_to_vendor_folder(glad)
 assign_to_vendor_folder(glad-generate-files)
 assign_to_vendor_folder(imgui)
 assign_to_vendor_folder(glm)
+# assign_to_vendor_folder(stb)  # doesn't work since stb is not a project
 
 
 # Call the create_source_groups function to mirror the 
