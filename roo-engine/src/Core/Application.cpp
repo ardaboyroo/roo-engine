@@ -13,15 +13,15 @@ namespace roo
 
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
-        : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+    Application::Application(WindowSettings& settings)
+        : m_Camera(0.0f, settings.Width, settings.Height, 0.0f)
     {
         if (!s_Instance)
             s_Instance = this;
         else
             ROO_LOG_ERROR("Application already exists!");
 
-        m_Window = std::make_unique<Window>(BIND_EVENT_FN(Application::OnEvent));
+        m_Window = std::make_unique<Window>(BIND_EVENT_FN(Application::OnEvent), settings);
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
@@ -45,6 +45,14 @@ namespace roo
             // Update all layers
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate(m_DeltaTime);
+
+            // Draw all objects of each layer
+            for (Layer* layer : m_LayerStack)
+            {
+                for (auto& child : layer->GetChildren())
+                    if (child->GetVisible())
+                        child->Draw();
+            }
 
             // Draw imgui buffers from all layers
             m_ImGuiLayer->Begin();

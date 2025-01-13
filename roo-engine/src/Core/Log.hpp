@@ -2,6 +2,9 @@
 
 #include <string>
 
+// This is the logging api. Use one of the client macros defined below
+// to Log things from App side.
+// NOTE: avoid using roo_log macros to prevent confusion.
 namespace roo
 {
     namespace Log

@@ -5,7 +5,7 @@ It is a basic 2D engine capable of rendering textures and other game-engine-like
 
 
 ## How to install
-> **NOTE:** This project requires CMake to set up.
+> **NOTE:** This project requires CMake and Python to set up.
 
 First, clone the repository with the following command:
 ```

@@ -7,5 +7,6 @@ namespace roo
     namespace Core
     {
         void Init();
+        void Uninit();
     }
 }

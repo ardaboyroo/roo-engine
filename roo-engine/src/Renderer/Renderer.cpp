@@ -4,13 +4,6 @@
 
 namespace roo
 {
-    void Renderer::BeginScene()
-    {
-    }
-    void Renderer::EndScene()
-    {
-    }
-
     void Renderer::Clear()
     {
         glClear(GL_COLOR_BUFFER_BIT);

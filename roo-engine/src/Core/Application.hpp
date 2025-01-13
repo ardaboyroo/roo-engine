@@ -16,10 +16,13 @@
 
 namespace roo
 {
+    // This is the "entry point" for your application. Inherit from roo::Application and
+    // define the "roo::Application* CreateApplication()" in one of your files and return an 
+    // instance of your subclass. An example can be found in roo.hpp
     class Application
     {
     public:
-        Application();
+        Application(WindowSettings& settings = WindowSettings());
         virtual ~Application();
         static Application& Get();
 

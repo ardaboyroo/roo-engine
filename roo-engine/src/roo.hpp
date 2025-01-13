@@ -28,6 +28,9 @@
 #include "Core/KeyCodes.hpp"
 #include "Core/MouseCodes.hpp"
 #include "Core/Texture.hpp"
+#include "Core/GameObject.hpp"
+#include "Core/Sprite.hpp"
+#include "Core/Rectangle.hpp"
 
 // ImGui headers
 #include "ImGui/ImGuiLayer.hpp"
@@ -49,6 +52,7 @@
 
 // Util headers
 #include "Utils/Utils.hpp"
+#include "Utils/Audio.hpp"
 
 // Third Party headers
 #include "glm/glm.hpp"

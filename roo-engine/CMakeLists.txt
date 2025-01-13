@@ -82,6 +82,13 @@ FetchContent_Declare(
     GIT_TAG        5c205738c191bcb0abc65c4febfa9bd25ff35234
 )
 
+# Fetch SoLoud
+FetchContent_Declare(
+    miniaudio
+    GIT_REPOSITORY https://github.com/mackron/miniaudio.git
+    GIT_TAG        0.11.21
+)
+
 
 # Disable unnecessary features for GLFW
 set(GLFW_BUILD_EXAMPLES OFF)
@@ -101,6 +108,7 @@ FetchContent_MakeAvailable(glad)
 FetchContent_MakeAvailable(imgui)
 FetchContent_MakeAvailable(glm)
 FetchContent_MakeAvailable(stb)
+FetchContent_MakeAvailable(miniaudio)
 
 
 # Since ImGui doesn't support cmake we have to do it manually.
@@ -134,6 +142,7 @@ add_library(stb INTERFACE)
 
 # Include every (header) file into the target
 target_include_directories(stb INTERFACE ${stb_SOURCE_DIR})
+target_include_directories(roo-engine PRIVATE ${miniaudio_SOURCE_DIR})
 
 
 # Statically link the libraries into roo-engine without exposing it to other targets

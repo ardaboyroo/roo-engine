@@ -34,7 +34,7 @@ namespace roo
     class Window
     {
     public:
-        Window(const EventCallbackFn& callback, const WindowSettings& settings = WindowSettings());
+        Window(const EventCallbackFn& callback, const WindowSettings& settings);
         ~Window();
 
         void OnUpdate();
