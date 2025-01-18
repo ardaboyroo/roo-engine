@@ -2,8 +2,6 @@
 
 
 # Create the executable target
-# TODO: Glob this?
-#add_executable(App ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 add_executable(App)
 
 
