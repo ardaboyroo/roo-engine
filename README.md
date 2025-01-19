@@ -1,4 +1,7 @@
 # roo-engine
+![roo-engine pong](https://github.com/user-attachments/assets/31739e9d-a161-4a13-a80e-66139f18396e)
+
+
 ## About
 Roo-engine is a project I made during my Saxion Skilled minor for the Creative Media and Game Technologies (CMGT) study. 
 It is a basic 2D engine capable of rendering textures and other game-engine-like features.
@@ -31,3 +34,5 @@ This project is officially tested and runs with:
 - Visual Studio 2022
 
 DISCLAIMER: There is no guarantee that this project will generate/build/run on any OS or IDE other than those listed above.
+
+Demonstration video: https://youtu.be/HIoDLmni3wo
