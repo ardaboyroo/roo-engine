@@ -6,6 +6,7 @@
 Roo-engine is a project I made during my Saxion Skilled minor for the Creative Media and Game Technologies (CMGT) study. 
 It is a basic 2D engine capable of rendering textures and other game-engine-like features.
 
+Demonstration video: https://youtu.be/HIoDLmni3wo
 
 ## How to install
 > **NOTE:** This project requires CMake and Python to set up.
@@ -35,4 +36,3 @@ This project is officially tested and runs with:
 
 DISCLAIMER: There is no guarantee that this project will generate/build/run on any OS or IDE other than those listed above.
 
-Demonstration video: https://youtu.be/HIoDLmni3wo
