@@ -10,6 +10,11 @@ int main(int argc, char** argv)
     roo::Core::Init();
     
     auto app = roo::CreateApplication();
+
+    // Initialize ImGui on the App side since heaps and globals 
+    // aren't shared across DLL boundaries
+    ImGui::SetCurrentContext(roo::Application::Get().GetImGuiContext());
+
     app->Run();
     delete app;
 

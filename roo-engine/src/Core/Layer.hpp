@@ -21,14 +21,6 @@ namespace roo
         virtual void OnAttach() {}
         virtual void OnDetach() {}
         virtual void OnUpdate(float deltaTime) {}
-
-        // NOTE: To make use of ImGui functions make sure to call the 
-        // following function in the constructor or OnAttach function:
-        //
-        // ImGui::SetCurrentContext(roo::Application::Get().GetImGuiContext());
-        //
-        // Heaps and globals are not shared across DLL boundaries.
-        // You will need to call SetCurrentContext() + SetAllocatorFunctions()
         virtual void OnImGuiRender() {}
         virtual void OnEvent(roo::Event& event) {}
 
