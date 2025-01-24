@@ -11,9 +11,6 @@ public:
     PongLayer()
         : Layer("PongLayer"), window(roo::Application::Get().GetWindow())
     {
-        // Heaps and globals are not shared across DLL boundaries! 
-        // You will need to call SetCurrentContext() + SetAllocatorFunctions()
-        ImGui::SetCurrentContext(roo::Application::Get().GetImGuiContext());
     }
 
     void OnAttach()
