@@ -23,7 +23,7 @@ roo-engine/scripts/GenerateProjectFiles.bat
 
 or
 
-You can run the following CMake commands from the root directory on your terminal.
+You can run the following CMake commands from the project root directory on your terminal.
 ```cmd
 mkdir build
 cd build
